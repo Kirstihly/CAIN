@@ -1,0 +1,17 @@
+{
+    "graphs": [
+        {
+            "graph_names": [
+                "qnn_cain_quantized"
+            ],
+            "vtcm_mb": 2
+        }
+    ],
+    "devices": [
+        {
+            "htp_arch": "v79",
+            "profiling_level": "linting"
+        }
+        
+    ]
+}
