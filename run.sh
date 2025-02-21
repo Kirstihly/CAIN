@@ -11,4 +11,6 @@ CUDA_VISIBLE_DEVICES=0 python main.py \
     --max_epoch 200 \
     --lr 0.0002 \
     --log_iter 100 \
+    --data_root /Documents/vendor_triplet \
+    --use_tensorboard
 #    --mode test

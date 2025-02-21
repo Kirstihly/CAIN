@@ -6,39 +6,44 @@ from torchvision import transforms
 from PIL import Image
 import random
 
+
 class VimeoTriplet(Dataset):
     def __init__(self, data_root, is_training):
         self.data_root = data_root
-        self.image_root = os.path.join(self.data_root, 'sequences')
+        self.image_root = os.path.join(self.data_root, "sequences")
         self.training = is_training
 
-        train_fn = os.path.join(self.data_root, 'tri_trainlist.txt')
-        test_fn = os.path.join(self.data_root, 'tri_testlist.txt')
-        with open(train_fn, 'r') as f:
+        train_fn = os.path.join(self.data_root, "tri_trainlist.txt")
+        test_fn = os.path.join(self.data_root, "tri_testlist.txt")
+        with open(train_fn, "r") as f:
             self.trainlist = f.read().splitlines()
-        with open(test_fn, 'r') as f:
+        with open(test_fn, "r") as f:
             self.testlist = f.read().splitlines()
-        
-        self.transforms = transforms.Compose([
-            transforms.RandomCrop(256),
-            transforms.RandomHorizontalFlip(0.5),
-            transforms.RandomVerticalFlip(0.5),
-            transforms.ColorJitter(0.05, 0.05, 0.05, 0.05),
-            transforms.ToTensor()
-        ])
-        
+
+        self.transforms = transforms.Compose(
+            [
+                transforms.RandomCrop(256),
+                transforms.RandomHorizontalFlip(0.5),
+                transforms.RandomVerticalFlip(0.5),
+                transforms.ColorJitter(0.05, 0.05, 0.05, 0.05),
+                transforms.ToTensor(),
+            ]
+        )
 
     def __getitem__(self, index):
         if self.training:
             imgpath = os.path.join(self.image_root, self.trainlist[index])
         else:
             imgpath = os.path.join(self.image_root, self.testlist[index])
-        imgpaths = [imgpath + '/im1.png', imgpath + '/im2.png', imgpath + '/im3.png']
+        imgpaths = [imgpath + "/im1.png", imgpath + "/im2.png", imgpath + "/im3.png"]
 
         # Load images
         img1 = Image.open(imgpaths[0])
+        img1 = img1.convert("RGB")
         img2 = Image.open(imgpaths[1])
+        img2 = img2.convert("RGB")
         img3 = Image.open(imgpaths[2])
+        img3 = img3.convert("RGB")
 
         # Data augmentation
         if self.training:
@@ -60,7 +65,7 @@ class VimeoTriplet(Dataset):
             img3 = T(img3)
 
         imgs = [img1, img2, img3]
-        
+
         return imgs, imgpaths
 
     def __len__(self):
@@ -72,9 +77,15 @@ class VimeoTriplet(Dataset):
 
 
 def get_loader(mode, data_root, batch_size, shuffle, num_workers, test_mode=None):
-    if mode == 'train':
+    if mode == "train":
         is_training = True
     else:
         is_training = False
     dataset = VimeoTriplet(data_root, is_training=is_training)
-    return DataLoader(dataset, batch_size=batch_size, shuffle=shuffle, num_workers=num_workers, pin_memory=True)
+    return DataLoader(
+        dataset,
+        batch_size=batch_size,
+        shuffle=shuffle,
+        num_workers=num_workers,
+        pin_memory=True,
+    )
