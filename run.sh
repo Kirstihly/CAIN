@@ -4,7 +4,7 @@ CUDA_VISIBLE_DEVICES=0 python main.py \
     --exp_name CAIN_train \
     --dataset vimeo90k \
     --batch_size 16 \
-    --test_batch_size 16 \
+    --test_batch_size 1 \
     --model cain \
     --depth 3 \
     --loss 1*L1 \
