@@ -17,10 +17,10 @@ class Encoder(nn.Module):
         self.shuffler = PixelShuffle(1 / 2**depth)
 
         relu = nn.LeakyReLU(0.2, True)
-        
+
         # FF_RCAN or FF_Resblocks
-        self.interpolate = Interpolation(5, 12, in_channels * (4**depth), act=relu)
-        
+        self.interpolate = Interpolation(3, 6, in_channels * (4**depth), act=relu)
+
     def forward(self, x1, x2):
         """
         Encoder: Shuffle-spread --> Feature Fusion --> Return fused features
@@ -49,7 +49,7 @@ class Decoder(nn.Module):
 class CAIN(nn.Module):
     def __init__(self, depth=3):
         super(CAIN, self).__init__()
-        
+
         self.encoder = Encoder(in_channels=3, depth=depth)
         self.decoder = Decoder(depth=depth)
 

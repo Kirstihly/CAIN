@@ -3,7 +3,7 @@ import os
 import random
 
 DATA_BASE = "/Documents/vendor_triplet"
-TRAIN_RATIO = 0.8
+TRAIN_RATIO = 0.95
 
 if __name__ == "__main__":
     end_subfolders = []
