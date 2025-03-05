@@ -1,7 +1,7 @@
 #!/bin/bash
 
 CUDA_VISIBLE_DEVICES=0 python main.py \
-    --exp_name resgroups_3_resblocks_6 \
+    --exp_name blendin_halfconv_resgroups_3_resblocks_6 \
     --dataset vimeo90k \
     --batch_size 16 \
     --test_batch_size 1 \
@@ -12,6 +12,5 @@ CUDA_VISIBLE_DEVICES=0 python main.py \
     --lr 0.0002 \
     --log_iter 100 \
     --data_root /Documents/vendor_triplet \
-    --use_tensorboard \
-    --resume
+    --use_tensorboard
 #    --mode test
